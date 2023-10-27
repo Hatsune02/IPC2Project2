@@ -2,21 +2,20 @@ package com.navi.jobhub.model;
 
 import lombok.*;
 
-@Getter @Setter @ToString
+import java.util.ArrayList;
+
+@Getter @Setter @ToString @Builder
+@AllArgsConstructor @NoArgsConstructor
 public class Employer extends User{
     private String mission;
     private String vision;
+    private Card card;
 
-    public Employer() {
-    }
-
-    public Employer(int id) {
-        super(id);
-    }
-
-    public Employer(int id, String mission, String vision) {
-        super(id);
-        this.mission = mission;
-        this.vision = vision;
+    public Employer(User user, Employer employer){
+        super(user.getId(), user.getType(), user.getName(),user.getUsername(),
+                user.getPassword(), user.getAddress(),user.getEmail(), user.getCUI(),
+                user.getBirth(), user.getVerify(), user.getPhoneNumbers());
+        this.mission = employer.getMission();
+        this.vision = employer.getVision();
     }
 }

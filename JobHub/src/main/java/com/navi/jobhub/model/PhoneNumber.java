@@ -4,10 +4,8 @@ import lombok.*;
 
 @Getter @Setter @ToString @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class Card {
+public class PhoneNumber {
     private int userId;
-    private String owner;
     private String number;
-    private String password;
 
 }
