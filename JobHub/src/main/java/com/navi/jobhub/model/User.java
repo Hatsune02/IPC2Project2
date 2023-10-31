@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter @ToString @Builder
 @NoArgsConstructor @AllArgsConstructor
@@ -18,6 +19,6 @@ public class User {
     private String CUI;
     private Date birth;
     private int verify;
-    private ArrayList<PhoneNumber> phoneNumbers;
+    private List<PhoneNumber> phoneNumbers;
 
 }

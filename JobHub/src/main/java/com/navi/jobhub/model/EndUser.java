@@ -9,9 +9,17 @@ import java.util.ArrayList;
 public class EndUser extends User{
     private ArrayList<Category> categories;
 
-    public EndUser(User user){
-        super(user.getId(), user.getType(), user.getName(),user.getUsername(),
-                user.getPassword(), user.getAddress(),user.getEmail(), user.getCUI(),
-                user.getBirth(), user.getVerify(), user.getPhoneNumbers());
+    public void completeInfo(User user){
+        setId(user.getId());
+        setType(user.getType());
+        setName(user.getName());
+        setUsername(user.getUsername());
+        setPassword(user.getPassword());
+        setAddress(user.getAddress());
+        setEmail(user.getEmail());
+        setCUI(user.getCUI());
+        setBirth(user.getBirth());
+        setVerify(user.getVerify());
+        setPhoneNumbers(user.getPhoneNumbers());
     }
 }

@@ -11,11 +11,17 @@ public class Employer extends User{
     private String vision;
     private Card card;
 
-    public Employer(User user, Employer employer){
-        super(user.getId(), user.getType(), user.getName(),user.getUsername(),
-                user.getPassword(), user.getAddress(),user.getEmail(), user.getCUI(),
-                user.getBirth(), user.getVerify(), user.getPhoneNumbers());
-        this.mission = employer.getMission();
-        this.vision = employer.getVision();
+    public void completeInfo(User user){
+        setId(user.getId());
+        setType(user.getType());
+        setName(user.getName());
+        setUsername(user.getUsername());
+        setPassword(user.getPassword());
+        setAddress(user.getAddress());
+        setEmail(user.getEmail());
+        setCUI(user.getCUI());
+        setBirth(user.getBirth());
+        setVerify(user.getVerify());
+        setPhoneNumbers(user.getPhoneNumbers());
     }
 }

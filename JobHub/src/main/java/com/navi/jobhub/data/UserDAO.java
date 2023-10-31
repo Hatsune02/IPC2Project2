@@ -5,6 +5,8 @@ import static com.navi.jobhub.data.Conexion.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class UserDAO {
     private static final String SQL_SELECT = "select * from users";
     private static final String SQL_INSERT_ID = "insert into users values(?,?,?,?,?,?,?,?,?,?)";
@@ -50,6 +52,23 @@ public class UserDAO {
         }
         return users;
     }
+
+    // type == 1 admin
+    // type == 2 employer
+    // type == 3 endUser
+    public List<User> usersTypeList(int type){
+        return select().stream().filter(u -> u.getType() == type).collect(Collectors.toList());
+    }
+
+    public User viewUser(int id){
+        for(User u:select()){
+            if(u.getId() == id) return u;
+        }
+        return null;
+    }
+
+
+
 
     public int insert(User user){
         Connection con = null;

@@ -6,6 +6,8 @@ import static com.navi.jobhub.data.Conexion.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class PhoneNumberDAO {
     private static final String SQL_SELECT = "select * from phone_numbers";
     private static final String SQL_INSERT = "insert into phone_numbers values(?,?)";
@@ -40,6 +42,10 @@ public class PhoneNumberDAO {
             }
         }
         return phoneNumbers;
+    }
+
+    public List<PhoneNumber> phoneNumbersUser(int id){
+        return select().stream().filter(p -> p.getUserId()== id).collect(Collectors.toList());
     }
     public int insert(PhoneNumber phoneNumber){
         Connection con = null;

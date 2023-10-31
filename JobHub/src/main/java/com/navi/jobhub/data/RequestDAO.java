@@ -5,6 +5,8 @@ import static com.navi.jobhub.data.Conexion.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class RequestDAO {
     private static final String SQL_SELECT = "select * from requests";
     private static final String SQL_INSERT_ID = "insert into requests values(?,?,?,?,?)";
@@ -44,6 +46,19 @@ public class RequestDAO {
             }
         }
         return requests;
+    }
+    public List<Request> requestsOffer(int offerId){
+        return select().stream().filter(r -> r.getOfferId()==offerId).collect(Collectors.toList());
+    }
+
+    public List<Request> requestsUser(int userId){
+        return select().stream().filter(r -> r.getUserId()==userId).collect(Collectors.toList());
+    }
+    public Request viewRequest(int id){
+        for(Request request:select()){
+            if(request.getId()==id) return request;
+        }
+        return null;
     }
 
     public int insert(Request request){

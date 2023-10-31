@@ -5,6 +5,8 @@ import static com.navi.jobhub.data.Conexion.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class InterviewDAO {
     private static final String SQL_SELECT = "select * from interviews";
     private static final String SQL_INSERT_ID = "insert into interviews values(?,?,?,?,?,?,?,?)";
@@ -46,6 +48,18 @@ public class InterviewDAO {
             }
         }
         return interviews;
+    }
+    public List<Interview> interviewsOffer(int offerId){
+        return select().stream().filter(i -> i.getOfferId() == offerId).collect(Collectors.toList());
+    }
+    public List<Interview> interviewsUser(int userId){
+        return select().stream().filter(i -> i.getUserId() == userId).collect(Collectors.toList());
+    }
+    public Interview viewInterview(int id){
+        for(Interview interview:select()){
+            if(interview.getId() == id) return interview;
+        }
+        return null;
     }
 
     public int insert(Interview interview){

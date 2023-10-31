@@ -46,6 +46,13 @@ public class CategoryDAO {
         }
         return categories;
     }
+    public Category viewCategory(int id){
+        for(Category category:select()){
+            if(category.getId() == id) return category;
+        }
+        return null;
+    }
+
     public int insert(Category category){
         Connection con = null;
         PreparedStatement ps = null;

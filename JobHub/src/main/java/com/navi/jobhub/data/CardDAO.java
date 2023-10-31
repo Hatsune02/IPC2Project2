@@ -1,7 +1,6 @@
 package com.navi.jobhub.data;
 
 import com.navi.jobhub.model.Card;
-import com.navi.jobhub.model.PhoneNumber;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,6 +43,12 @@ public class CardDAO {
             }
         }
         return cards;
+    }
+    public Card viewCard(int id){
+        for(Card card: select()){
+            if(card.getUserId() == id) return card;
+        }
+        return null;
     }
 
     public int insert(Card card){
