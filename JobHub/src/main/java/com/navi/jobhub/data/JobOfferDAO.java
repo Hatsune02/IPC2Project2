@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JobOfferDAO {
-    private static final String SQL_SELECT = "select * from job_offers";
+    private static final String SQL_SELECT = "select * from job_offers where state != 'ELIMINADO'";
     private static final String SQL_INSERT_ID = "insert into job_offers values(?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_INSERT = "insert into job_offers(offer_name,offer_description,employer_id,category_id,state,created_at,end_at,salary,modality,location,details) values (?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "insert into job_offers(offer_name,offstateer_description,employer_id,category_id,state,created_at,end_at,salary,modality,location,details) values (?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_UPDATE = "update job_offers set offer_name=?,offer_description=?,employer_id=?,category_id=?,state=?,created_at=?,end_at=?,salary=?,modality=?,location=?,details=? where offer_id=?";
 
     public List<JobOffer> select(){

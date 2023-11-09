@@ -19,12 +19,6 @@ public class EmployerService {
         phoneNumberDAO = new PhoneNumberDAO();
     }
 
-    public void createUser(User user, ArrayList<PhoneNumber> phoneNumbers){
-        userDAO.insert(user);
-        for(PhoneNumber phoneNumber: phoneNumbers){
-            phoneNumberDAO.insert(phoneNumber);
-        }
-    }
     public void createEmployer(Employer employer, Card card){
         employerDAO.insert(employer);
         cardDAO.insert(card);
@@ -38,7 +32,8 @@ public class EmployerService {
             id = employer.getId();
             user = userDAO.viewUser(id);
             employer.completeInfo(user);
-            employer.setPhoneNumbers(phoneNumberDAO.phoneNumbersUser(id));
+            //employer.setPhoneNumbers(phoneNumberDAO.phoneNumbersUser(id));
+            employer.setPhones(phoneNumberDAO.numbersUser(id));
             employer.setCard(cardDAO.viewCard(id));
         }
 

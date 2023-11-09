@@ -1,39 +1,32 @@
 package com.navi.jobhub.utils;
 
-import java.io.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
 
-import javax.swing.text.html.parser.Parser;
-
 public class FillDataBase {
-    public static void parser(FileReader reader) {
+    public static void parser(String fileContent) {
         JSONParser jsonParser = new JSONParser();
         try {
-            Object obj = jsonParser.parse(reader);
 
-
-            JSONObject jsonObject = (JSONObject) obj;
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(fileContent);
 
             JSONObject admin = (JSONObject) jsonObject.get("admin");
-            JSONArray employees = (JSONArray) jsonObject.get("empleadores");
+            JSONArray employers = (JSONArray) jsonObject.get("empleadores");
             JSONArray users = (JSONArray) jsonObject.get("usuarios");
             JSONArray categories = (JSONArray) jsonObject.get("categorias");
             JSONArray offer = (JSONArray) jsonObject.get("ofertas");
 
 
             admin(admin);
-            for(Object employee: employees){
-                employee((JSONObject) employee);
+            for(Object employer: employers){
+                employer((JSONObject) employer);
             }
 
         } catch(ParseException e){
             e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
     private static void admin(JSONObject object){
@@ -61,7 +54,7 @@ public class FillDataBase {
             }
         }catch (Exception ignored){}
     }
-    private static void employee(JSONObject object){
+    private static void employer(JSONObject object){
         try{
             boolean valid = false;
             Long id = (Long) object.get("codigo");

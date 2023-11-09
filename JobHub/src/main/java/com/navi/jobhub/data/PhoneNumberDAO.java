@@ -47,6 +47,15 @@ public class PhoneNumberDAO {
     public List<PhoneNumber> phoneNumbersUser(int id){
         return select().stream().filter(p -> p.getUserId()== id).collect(Collectors.toList());
     }
+
+    public List<String> numbersUser(int id){
+        List<String> numbers = new ArrayList<>();
+        for(PhoneNumber p: select()){
+            if(p.getUserId() == id) numbers.add(p.getNumber());
+        }
+        return numbers;
+    }
+
     public int insert(PhoneNumber phoneNumber){
         Connection con = null;
         PreparedStatement ps = null;

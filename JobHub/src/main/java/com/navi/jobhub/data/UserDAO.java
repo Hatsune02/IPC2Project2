@@ -12,7 +12,7 @@ public class UserDAO {
     private static final String SQL_INSERT_ID = "insert into users values(?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_INSERT = "insert into users(user_type,user_name,username,user_password,address,email,CUI,birth_date, verify) values (?,?,?,?,?,?,?,?,?)";
     private static final String SQL_UPDATE = "update users set user_type=?, user_name=?, username=?, user_password=?, address=?, email=?, CUI=?, birth_date=?, verify=? where user_id=?";
-    private static final String SQL_VALIDATE = "select count(id) as amount from users where username=? and user_password=?";
+    private static final String SQL_VALIDATE = "select count(user_id) as amount from users where username=? and user_password=?";
     public List<User> select(){
         Connection con=null;
         PreparedStatement ps = null;
@@ -66,8 +66,19 @@ public class UserDAO {
         }
         return null;
     }
+    public User viewUser(String username){
+        for(User u:select()){
+            if(u.getUsername().equals(username)) return u;
+        }
+        return null;
+    }
 
-
+    public int searchId(String username){
+        for(User u:select()){
+            if(u.getUsername().equals(username)) return u.getId();
+        }
+        return -1;
+    }
 
 
     public int insert(User user){

@@ -12,7 +12,9 @@ public class JobOffer {
     private String name;
     private String description;
     private int employerId;
+    private String employer;
     private int categoryId;
+    private String category;
     private String state;
     private Date created;
     private Date end;
@@ -21,6 +23,7 @@ public class JobOffer {
     private String location;
     private String details;
     private int chosenUser;
+    private String chosenUserName;
     private List<Request> requests;
     private List<Interview> interviews;
 

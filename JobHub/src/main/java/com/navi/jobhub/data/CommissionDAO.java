@@ -1,6 +1,7 @@
 package com.navi.jobhub.data;
 
-import com.navi.jobhub.model.*;
+import com.navi.jobhub.model.Card;
+import com.navi.jobhub.model.Commission;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,27 +10,28 @@ import java.util.List;
 import static com.navi.jobhub.data.Conexion.close;
 import static com.navi.jobhub.data.Conexion.getConnection;
 
-public class CategoryDAO {
-    private static final String SQL_SELECT = "select * from categories";
-    private static final String SQL_INSERT_ID = "insert into categories values(?,?,?)";
-    private static final String SQL_INSERT = "insert into categories(category_name,category_description) values (?,?)";
-    private static final String SQL_UPDATE = "update categories set category_name=?, category_description=? where category_id=?";
+public class CommissionDAO {
+    private static final String SQL_SELECT = "select * from commissions";
+    private static final String SQL_SELECT_COMMISSION = "select commission from commissions order by start_date desc limit 1";
+    private static final String SQL_INSERT = "insert into commissions(commission) values(?)";
+    private static final String SQL_UPDATE = "update commissions set end_date=? where commission_id=?";
 
-    public List<Category> select(){
+    public List<Commission> select(){
         Connection con=null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Category> categories = new ArrayList<>();
+        List<Commission> commissions = new ArrayList<>();
 
         try{
             con = getConnection();
             ps = con.prepareStatement(SQL_SELECT);
             rs = ps.executeQuery();
             while (rs.next()){
-                int id = rs.getInt("category_id");
-                String name = rs.getString("category_name");
-                String description = rs.getString("category_description");
-                categories.add(Category.builder().id(id).name(name).description(description).build());
+                int id = rs.getInt("commission_id");
+                Date startDate = rs.getDate("start_date");
+                Date endDate = rs.getDate("end_date");
+                double commission = rs.getDouble("commission");
+                commissions.add(Commission.builder().id(id).startDate(startDate).endDate(endDate).commission(commission).build());
             }
 
         }catch (SQLException e){
@@ -44,27 +46,44 @@ public class CategoryDAO {
                 throw new RuntimeException(e);
             }
         }
-        return categories;
+        return commissions;
     }
-    public Category viewCategory(int id){
-        for(Category category:select()){
-            if(category.getId() == id) return category;
-        }
-        return null;
-    }
-    public Category viewNewCategory(){
-        return select().get(select().size()-1);
-    }
+    public double actualCommission(){
+        Connection con=null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        double commission = 0;
 
-    public int insert(Category category){
+        try{
+            con = getConnection();
+            ps = con.prepareStatement(SQL_SELECT_COMMISSION);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                commission = rs.getDouble("commission");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace(System.out);
+        }
+        finally {
+            try {
+                close(ps);
+                close(rs);
+                close(con);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return commission;
+    }
+    public int insert(double commission){
         Connection con = null;
         PreparedStatement ps = null;
         int records = 0;
         try {
             con = getConnection();
             ps = con.prepareStatement(SQL_INSERT);
-            ps.setString(1,category.getName());
-            ps.setString(2,category.getDescription());
+            ps.setDouble(1,commission);
             records = ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -80,44 +99,15 @@ public class CategoryDAO {
         }
         return records;
     }
-
-    public int insertId(Category category){
-        Connection con = null;
-        PreparedStatement ps = null;
-        int records = 0;
-        try {
-            con = getConnection();
-            ps = con.prepareStatement(SQL_INSERT_ID);
-            ps.setInt(1,category.getId());
-            ps.setString(2,category.getName());
-            ps.setString(3,category.getDescription());
-            records = ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        }
-        finally {
-            try {
-                close(ps);
-                close(con);
-            } catch (SQLException e) {
-                e.printStackTrace(System.out);
-            }
-        }
-        return records;
-    }
-
-    public int update(Category category){
+    public int updateEndDate(Commission commission, Date endDate){
         Connection con = null;
         PreparedStatement ps = null;
         int records = 0;
         try {
             con = getConnection();
             ps = con.prepareStatement(SQL_UPDATE);
-            ps.setString(1,category.getName());
-            ps.setString(2,category.getDescription());
-            ps.setInt(3,category.getId());
-
+            ps.setDate(1,endDate);
+            ps.setInt(2,commission.getId());
             records = ps.executeUpdate();
 
         } catch (SQLException e) {

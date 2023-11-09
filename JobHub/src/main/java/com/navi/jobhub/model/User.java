@@ -20,5 +20,5 @@ public class User {
     private Date birth;
     private int verify;
     private List<PhoneNumber> phoneNumbers;
-
+    private List<String> phones;
 }

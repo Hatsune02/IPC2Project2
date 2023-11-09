@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 
-@Getter @Setter @ToString @Builder
+@Getter @Setter @ToString
 @AllArgsConstructor @NoArgsConstructor
 public class EndUser extends User{
     private ArrayList<Category> categories;

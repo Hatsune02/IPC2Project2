@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 
-@Getter @Setter @ToString @Builder
+@Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 public class Employer extends User{
     private String mission;

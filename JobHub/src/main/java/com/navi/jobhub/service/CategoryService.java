@@ -19,6 +19,9 @@ public class CategoryService {
     public Category viewCategory(int id){
         return categoryDAO.viewCategory(id);
     }
+    public Category newCategory(){
+        return categoryDAO.viewNewCategory();
+    }
 
     public void create(Category category){
         categoryDAO.insert(category);
